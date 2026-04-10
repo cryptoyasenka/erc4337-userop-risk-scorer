@@ -101,3 +101,35 @@ A single probability in `[0, 1]`. Higher values mean the UserOperation is more l
 - **Paymaster reputation:** aggregated on-chain sponsorship history + curated lists from Pimlico / Stackup.
 - **Target contract risk:** Blockaid, GoPlus, Harpie, or local heuristic scoring.
 - **Bundler routing:** AA-specific explorers (jiffyscan.xyz, blockscan.com/aa).
+
+## Test Vectors
+
+The graph is a monotone `sigmoid(ReduceSum(Relu(features)))`, so outputs grow with the sum of inputs. Calibrate your feature scaling so that the three reference bands below land in the correct grade buckets for your deployment.
+
+| Profile | Input | Feature sum | Score | Grade |
+|---|---|---|---|---|
+| Clean | `[0.05, 0.02, 0.10, 0.00, 0.05, 0.00, 0.05, 0.00, 0.00, 0.00]` | 0.27 | `0.5670928955` | C (baseline) |
+| Suspicious | `[0.50, 0.45, 0.60, 0.80, 0.30, 0.20, 0.40, 0.15, 0.00, 0.10]` | 3.50 | `0.9706878066` | F |
+| Risky | `[0.85, 0.80, 0.90, 1.00, 0.75, 0.60, 0.70, 0.30, 1.00, 0.55]` | 7.45 | `0.9994188547` | F |
+
+## Local Inference
+
+```python
+import numpy as np
+import onnxruntime as ort
+
+sess = ort.InferenceSession("erc4337-userop-risk-scorer.onnx")
+
+risky = np.array([[0.85, 0.80, 0.90, 1.00, 0.75, 0.60, 0.70, 0.30, 1.00, 0.55]],
+                 dtype=np.float32)
+print(sess.run(None, {"features": risky})[0])  # [[0.99941885]]
+```
+
+## Rebuilding the ONNX File
+
+```bash
+pip install onnx onnxruntime
+python build_model.py
+```
+
+`build_model.py` regenerates `erc4337-userop-risk-scorer.onnx` deterministically (261 bytes, 3 ops, opset 11, 0 initializers).
