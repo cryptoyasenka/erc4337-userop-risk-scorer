@@ -2,6 +2,12 @@
 
 ONNX model that scores an ERC-4337 `UserOperation` on its probability of being malicious or economically abusive before a bundler includes it in a bundle. Designed for smart-account wallets, bundler services (Pimlico, Alchemy, Stackup, Biconomy), and security middlewares that need a fast pre-inclusion risk gate.
 
+- **Hub:** https://hub.opengradient.ai/models/NT_Kljxpd20dIof/erc4337-userop-risk-scorer
+- **Release:** 1.00
+- **Model CID:** `40KjZv9fQQ6ceGsl0YjP-5xIhbrmFV_1ftBjlo7yn4T`
+- **Category:** Risk Models
+- **License:** MIT
+
 ## Overview
 
 Ethereum is in the middle of the biggest wallet-architecture shift since EOAs: **account abstraction**. ERC-4337 (live on mainnet since 2023) and EIP-7702 (shipping in Pectra) make it possible for any address to act like a smart account — with session keys, sponsored gas, batched calls, and arbitrary signature schemes. That flexibility is also a new attack surface:
@@ -133,3 +139,14 @@ python build_model.py
 ```
 
 `build_model.py` regenerates `erc4337-userop-risk-scorer.onnx` deterministically (261 bytes, 3 ops, opset 11, 0 initializers).
+
+## Versioning
+
+| Version | Date | Notes |
+|---|---|---|
+| 1.00 | 2026-04-11 | Initial release — opset 11, 10 features, 261 bytes |
+
+## Tags
+
+`#defi #ml #riskmodel #erc4337 #accountabstraction #ethereum #wallet #bundler #paymaster`
+
