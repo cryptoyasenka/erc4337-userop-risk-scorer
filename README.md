@@ -4,7 +4,7 @@ ONNX model that scores an ERC-4337 `UserOperation` on its probability of being m
 
 - **Hub:** https://hub.opengradient.ai/models/NT_Kljxpd20dIof/erc4337-userop-risk-scorer
 - **Release:** 1.00
-- **Model CID:** `40KjZv9fQQ6ceGsl0YjP-5xIhbrmFV_1ftBjlo7yn4T`
+- **Model CID:** `KjZv9fQQ6ceGsl0YjP-5xIhbrmFV_1ftBjlo7yn4T2A`
 - **Category:** Risk Models
 - **License:** MIT
 
